@@ -71,3 +71,5 @@ if __name__ == "__main__":
 
     expression = solve_kmap(num_vars, kmap)
     print("Simplified Boolean Expression:", expression)
+
+

@@ -1,0 +1,73 @@
+### Explanation of K-Map Solver Logic and Implementation
+
+#### 1. **Overview of K-Maps**
+A Karnaugh Map (K-Map) is a graphical representation used to simplify Boolean algebra expressions. The process involves:
+
+1. Determining the number of variables (n).
+2. Mapping the minterms (truth table entries where the output is 1) onto the K-Map grid.
+3. Grouping adjacent 1s into blocks of 2, 4, 8, etc., following power-of-two rules.
+4. Deriving the simplified Boolean expression from these groups.
+
+#### 2. **File Modules Overview**
+
+**a. `kmap_input.py`**:
+   - Handles user input for the number of variables and the minterms.
+   - Constructs the K-Map by placing 1s in appropriate positions based on the minterms.
+
+**b. `kmap_grouping.py`**:
+   - Finds valid groups of adjacent 1s in the K-Map grid.
+   - Groups follow the rules of adjacency and must be powers of two.
+
+**c. `kmap_solver.py`**:
+   - Converts groups into Boolean expressions by identifying variable combinations that remain constant within each group.
+   - Outputs the final simplified Boolean equation.
+
+#### 3. **Input Parsing and K-Map Construction (`kmap_input.py`)
+
+- **User Input**:
+  The number of variables determines the K-Map size (2^n entries). The user also provides a list of minterms, which are integers corresponding to truth table rows where the function evaluates to 1.
+
+- **Mapping to Grid**:
+  For each minterm, its binary representation determines its position in the K-Map. The first half of the binary string indicates the row, while the second half indicates the column. 
+
+#### 4. **Grouping Logic (`kmap_grouping.py`)
+
+- **Rules of Grouping**:
+  1. Groups must be rectangular and contain 1s only.
+  2. The number of 1s in a group must be a power of two (e.g., 1, 2, 4, 8).
+  3. Groups can wrap around edges of the K-Map (cylindrical adjacency).
+
+- **Finding Groups**:
+  Iteratively attempt to form groups starting from the largest possible size (8, 4, etc.). Check all possible positions in the K-Map to identify valid groups. Once a group is formed, mark those cells to avoid reuse.
+
+#### 5. **Simplifying Expressions (`kmap_solver.py`)
+
+- **Extracting Expressions**:
+  Each group corresponds to a product term (AND operation). Variables that do not change within the group (constant across all cells) are included in the term. If a variable is 0 throughout the group, its negation (~) is used.
+
+- **Combining Terms**:
+  The final expression is the sum (OR operation) of all product terms derived from the groups.
+
+#### 6. **Example Walkthrough**
+
+**Input**:
+- Number of variables: 3
+- Minterms: 1, 3, 5, 7
+
+**Steps**:
+1. **Construct K-Map**:
+   A 3-variable K-Map has 2 rows and 4 columns. Map the minterms to their binary positions:
+   - Minterm 1: Binary `001`, Row 0, Column 1.
+   - Minterm 3: Binary `011`, Row 0, Column 3.
+   - Minterm 5: Binary `101`, Row 1, Column 1.
+   - Minterm 7: Binary `111`, Row 1, Column 3.
+
+   K-Map:
+   ```
+   0 1
+   0 1
+   ```
+
+2. **Grouping**:
+   The adjacency rule creates groups of cell.
+3. Create equatuins on Variables. Json explantion

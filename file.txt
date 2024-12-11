@@ -1,0 +1,6 @@
+kmap_solver/
+├── main.py               # Main entry point of the program
+├── kmap_input.py         # Handles input and k-map generation
+├── kmap_grouping.py      # Handles grouping logic
+├── kmap_solver.py        # Converts groups into boolean expressions
+└── explanation.txt       # Explanation of logic and code
